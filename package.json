@@ -1,0 +1,23 @@
+{
+	"name": "rest-api-and-react2024",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ueno-toshihiro"
+	},
+	"keywords": [
+		"openapi",
+		"swagger",
+		"orval",
+		"zustand",
+		"react",
+		"jest"
+	],
+	"author": "ueno",
+	"license": "ISC",
+	"description": "OpenAPI と Orval で REST API を TypeScript に変換して React で使う"
+}
