@@ -19,5 +19,8 @@
 	],
 	"author": "ueno",
 	"license": "ISC",
-	"description": "OpenAPI と Orval で REST API を TypeScript に変換して React で使う"
+	"description": "OpenAPI と Orval で REST API を TypeScript に変換して React で使う",
+	"devDependencies": {
+		"orval": "^6.31.0"
+	}
 }
