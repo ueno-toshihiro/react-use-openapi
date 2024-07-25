@@ -1,13 +1,12 @@
-import { useEffect, useState, useCallback } from 'react';
-import { User } from './api/users.schemas';
-import { listUsers } from './api/users';
+import { useCallback } from 'react';
+import { useListUsers } from './api/users';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import UserTable from './component/UserTable';
 import UserTableSkelton from './component/UserTableSkelton';
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
+  const { data: users, isPending, isLoading, isError } = useListUsers();
 
   const handleDelete = useCallback((id: number) => {
     console.log('delete user', id);
@@ -15,13 +14,6 @@ function App() {
 
   const handleEdit = useCallback((id: number) => {
     console.log('edit user', id);
-  }, []);
-
-  useEffect(() => {
-    setTimeout(async () => {
-      const users = await listUsers();
-      setUsers(users.data);
-    }, 1000);
   }, []);
 
   return (
@@ -33,17 +25,25 @@ function App() {
         <Grid item xs={12}>
           <h2>Users</h2>
         </Grid>
-        <Grid item xs={12}>
-          {users.length === 0 ? (
+        {
+          isError ? (
+            <Grid item xs={12}>
+              <div>Error</div>
+            </Grid>
+          ) : (
+            <Grid item xs={12}>
+          {isLoading ? (
             <UserTableSkelton />
           ) : (
             <UserTable
-              users={users}
+              users={users?.data || []}
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
           )}
         </Grid>
+          )
+        }
       </Grid>
     </Container>
   );

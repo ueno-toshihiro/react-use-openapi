@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import ReactQueryProvider from './ReactQueryProvider'
 
 const queryClient = new QueryClient();
 
@@ -14,7 +15,9 @@ if (process.env.NODE_ENV === 'development') {
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <ReactQueryProvider>
+        <App />
+      </ReactQueryProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root'),
