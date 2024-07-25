@@ -6,8 +6,8 @@ module.exports = {
     },
     output: {
       mode: "split",
-      target: "./src/gen/users.ts",
-      schema: "./src/gen/models",
+      target: "./src/api/users.ts",
+      schema: "./src/api/models",
       client: "react-query",
       httpClient: "fetch",
       baseUrl: "http://localhost:3000",
