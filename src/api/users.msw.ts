@@ -28,11 +28,11 @@ export const getListUsersResponseMock = () => ((() => {
                 });
               })())
 
-export const getCreateUserResponseMock = (overrideResponse: Partial< User > = {}): User => ({email: faker.helpers.arrayElement([faker.word.sample(), undefined]), id: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), name: faker.helpers.arrayElement([faker.word.sample(), undefined]), ...overrideResponse})
+export const getCreateUserResponseMock = (overrideResponse: Partial< User > = {}): User => ({email: faker.word.sample(), id: faker.number.int({min: undefined, max: undefined}), name: faker.word.sample(), ...overrideResponse})
 
-export const getShowUserByIdResponseMock = (overrideResponse: Partial< User > = {}): User => ({email: faker.helpers.arrayElement([faker.word.sample(), undefined]), id: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), name: faker.helpers.arrayElement([faker.word.sample(), undefined]), ...overrideResponse})
+export const getShowUserByIdResponseMock = (overrideResponse: Partial< User > = {}): User => ({email: faker.word.sample(), id: faker.number.int({min: undefined, max: undefined}), name: faker.word.sample(), ...overrideResponse})
 
-export const getUpdateUserByIdResponseMock = (overrideResponse: Partial< User > = {}): User => ({email: faker.helpers.arrayElement([faker.word.sample(), undefined]), id: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), name: faker.helpers.arrayElement([faker.word.sample(), undefined]), ...overrideResponse})
+export const getUpdateUserByIdResponseMock = (overrideResponse: Partial< User > = {}): User => ({email: faker.word.sample(), id: faker.number.int({min: undefined, max: undefined}), name: faker.word.sample(), ...overrideResponse})
 
 
 export const getListUsersMockHandler = (overrideResponse?: User[] | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<User[]> | User[])) => {

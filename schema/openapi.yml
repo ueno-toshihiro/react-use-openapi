@@ -109,6 +109,10 @@ components:
           type: string
         email:
           type: string
+      required:
+        - id
+        - name
+        - email
       example:
         id: 1
         name: "John Doe"

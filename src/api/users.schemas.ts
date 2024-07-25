@@ -5,8 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 export interface User {
-  email?: string;
-  id?: number;
-  name?: string;
+  email: string;
+  id: number;
+  name: string;
 }
 
