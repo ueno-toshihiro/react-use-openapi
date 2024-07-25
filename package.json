@@ -1,32 +1,58 @@
 {
-	"name": "rest-api-and-react2024",
-	"version": "1.0.0",
-	"main": "index.js",
-	"scripts": {
-		"test": "test"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/ueno-toshihiro"
-	},
-	"keywords": [
-		"openapi",
-		"swagger",
-		"orval",
-		"zustand",
-		"react",
-		"jest"
-	],
-	"author": "ueno",
-	"license": "ISC",
-	"description": "OpenAPI と Orval で REST API を TypeScript に変換して React で使う",
-	"devDependencies": {
-		"orval": "^6.31.0"
-	},
-	"dependencies": {
-		"@faker-js/faker": "^8.4.1",
-		"@tanstack/react-query": "^5.51.11",
-		"axios": "^1.7.2",
-		"msw": "^2.3.4"
-	}
+  "name": "rest-api-and-react2024",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ueno-toshihiro"
+  },
+  "keywords": [
+    "openapi",
+    "swagger",
+    "orval",
+    "zustand",
+    "react",
+    "jest"
+  ],
+  "author": "ueno",
+  "license": "ISC",
+  "description": "OpenAPI と Orval で REST API を TypeScript に変換して React で使う",
+  "devDependencies": {
+    "msw": "^2.3.4",
+    "orval": "^6.31.0",
+    "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@tanstack/react-query": "^5.51.11",
+    "@types/node": "^14.14.13",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "axios": "^0.26.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-query": "^3.34.19",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.9.5"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
