@@ -26,6 +26,21 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        201:
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
   /users/{userId}:
     get:
       summary: Get a user
@@ -61,21 +76,6 @@ paths:
       responses:
         200:
           description: User updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-    post:
-      summary: Create a new user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-      responses:
-        201:
-          description: User created
           content:
             application/json:
               schema:
