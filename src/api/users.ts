@@ -27,16 +27,12 @@ import type {
   User
 } from './users.schemas'
 
-type AwaitedInput<T> = PromiseLike<T> | T;
-
-      type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
-
 
 
 /**
  * @summary Get all users
  */
-export const getUsers = (
+export const listUsers = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<User[]>> => {
     
@@ -46,41 +42,41 @@ export const getUsers = (
   }
 
 
-export const getGetUsersQueryKey = () => {
+export const getListUsersQueryKey = () => {
     return [`http://localhost:3000/users`] as const;
     }
 
     
-export const getGetUsersQueryOptions = <TData = Awaited<ReturnType<typeof getUsers>>, TError = AxiosError<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUsers>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getListUsersQueryOptions = <TData = Awaited<ReturnType<typeof listUsers>>, TError = AxiosError<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
 const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetUsersQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getListUsersQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUsers>>> = ({ signal }) => getUsers({ signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listUsers>>> = ({ signal }) => listUsers({ signal, ...axiosOptions });
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUsers>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetUsersQueryResult = NonNullable<Awaited<ReturnType<typeof getUsers>>>
-export type GetUsersQueryError = AxiosError<unknown>
+export type ListUsersQueryResult = NonNullable<Awaited<ReturnType<typeof listUsers>>>
+export type ListUsersQueryError = AxiosError<unknown>
 
 /**
  * @summary Get all users
  */
-export const useGetUsers = <TData = Awaited<ReturnType<typeof getUsers>>, TError = AxiosError<unknown>>(
-  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUsers>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useListUsers = <TData = Awaited<ReturnType<typeof listUsers>>, TError = AxiosError<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetUsersQueryOptions(options)
+  const queryOptions = getListUsersQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -95,7 +91,7 @@ export const useGetUsers = <TData = Awaited<ReturnType<typeof getUsers>>, TError
 /**
  * @summary Create a new user
  */
-export const postUsers = (
+export const createUser = (
     user: User, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<User>> => {
     
@@ -107,18 +103,18 @@ export const postUsers = (
 
 
 
-export const getPostUsersMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postUsers>>, TError,{data: User}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof postUsers>>, TError,{data: User}, TContext> => {
+export const getCreateUserMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createUser>>, TError,{data: User}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof createUser>>, TError,{data: User}, TContext> => {
 const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postUsers>>, {data: User}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createUser>>, {data: User}> = (props) => {
           const {data} = props ?? {};
 
-          return  postUsers(data,axiosOptions)
+          return  createUser(data,axiosOptions)
         }
 
         
@@ -126,23 +122,23 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type PostUsersMutationResult = NonNullable<Awaited<ReturnType<typeof postUsers>>>
-    export type PostUsersMutationBody = User
-    export type PostUsersMutationError = AxiosError<unknown>
+    export type CreateUserMutationResult = NonNullable<Awaited<ReturnType<typeof createUser>>>
+    export type CreateUserMutationBody = User
+    export type CreateUserMutationError = AxiosError<unknown>
 
     /**
  * @summary Create a new user
  */
-export const usePostUsers = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postUsers>>, TError,{data: User}, TContext>, axios?: AxiosRequestConfig}
+export const useCreateUser = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createUser>>, TError,{data: User}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationResult<
-        Awaited<ReturnType<typeof postUsers>>,
+        Awaited<ReturnType<typeof createUser>>,
         TError,
         {data: User},
         TContext
       > => {
 
-      const mutationOptions = getPostUsersMutationOptions(options);
+      const mutationOptions = getCreateUserMutationOptions(options);
 
       return useMutation(mutationOptions);
     }
@@ -150,7 +146,7 @@ export const usePostUsers = <TError = AxiosError<unknown>,
 /**
  * @summary Get a user
  */
-export const getUsersUserId = (
+export const showUserById = (
     userId: number, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<User>> => {
     
@@ -160,41 +156,41 @@ export const getUsersUserId = (
   }
 
 
-export const getGetUsersUserIdQueryKey = (userId: number,) => {
+export const getShowUserByIdQueryKey = (userId: number,) => {
     return [`http://localhost:3000/users/${userId}`] as const;
     }
 
     
-export const getGetUsersUserIdQueryOptions = <TData = Awaited<ReturnType<typeof getUsersUserId>>, TError = AxiosError<unknown>>(userId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUsersUserId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getShowUserByIdQueryOptions = <TData = Awaited<ReturnType<typeof showUserById>>, TError = AxiosError<unknown>>(userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof showUserById>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
 const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetUsersUserIdQueryKey(userId);
+  const queryKey =  queryOptions?.queryKey ?? getShowUserByIdQueryKey(userId);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUsersUserId>>> = ({ signal }) => getUsersUserId(userId, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof showUserById>>> = ({ signal }) => showUserById(userId, { signal, ...axiosOptions });
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(userId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUsersUserId>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(userId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof showUserById>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type GetUsersUserIdQueryResult = NonNullable<Awaited<ReturnType<typeof getUsersUserId>>>
-export type GetUsersUserIdQueryError = AxiosError<unknown>
+export type ShowUserByIdQueryResult = NonNullable<Awaited<ReturnType<typeof showUserById>>>
+export type ShowUserByIdQueryError = AxiosError<unknown>
 
 /**
  * @summary Get a user
  */
-export const useGetUsersUserId = <TData = Awaited<ReturnType<typeof getUsersUserId>>, TError = AxiosError<unknown>>(
- userId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUsersUserId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useShowUserById = <TData = Awaited<ReturnType<typeof showUserById>>, TError = AxiosError<unknown>>(
+ userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof showUserById>>, TError, TData>>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetUsersUserIdQueryOptions(userId,options)
+  const queryOptions = getShowUserByIdQueryOptions(userId,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -209,7 +205,7 @@ export const useGetUsersUserId = <TData = Awaited<ReturnType<typeof getUsersUser
 /**
  * @summary Update a user
  */
-export const putUsersUserId = (
+export const updateUserById = (
     userId: number,
     user: User, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<User>> => {
@@ -222,18 +218,18 @@ export const putUsersUserId = (
 
 
 
-export const getPutUsersUserIdMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putUsersUserId>>, TError,{userId: number;data: User}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof putUsersUserId>>, TError,{userId: number;data: User}, TContext> => {
+export const getUpdateUserByIdMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: number;data: User}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: number;data: User}, TContext> => {
 const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof putUsersUserId>>, {userId: number;data: User}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateUserById>>, {userId: number;data: User}> = (props) => {
           const {userId,data} = props ?? {};
 
-          return  putUsersUserId(userId,data,axiosOptions)
+          return  updateUserById(userId,data,axiosOptions)
         }
 
         
@@ -241,23 +237,23 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type PutUsersUserIdMutationResult = NonNullable<Awaited<ReturnType<typeof putUsersUserId>>>
-    export type PutUsersUserIdMutationBody = User
-    export type PutUsersUserIdMutationError = AxiosError<unknown>
+    export type UpdateUserByIdMutationResult = NonNullable<Awaited<ReturnType<typeof updateUserById>>>
+    export type UpdateUserByIdMutationBody = User
+    export type UpdateUserByIdMutationError = AxiosError<unknown>
 
     /**
  * @summary Update a user
  */
-export const usePutUsersUserId = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof putUsersUserId>>, TError,{userId: number;data: User}, TContext>, axios?: AxiosRequestConfig}
+export const useUpdateUserById = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: number;data: User}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationResult<
-        Awaited<ReturnType<typeof putUsersUserId>>,
+        Awaited<ReturnType<typeof updateUserById>>,
         TError,
         {userId: number;data: User},
         TContext
       > => {
 
-      const mutationOptions = getPutUsersUserIdMutationOptions(options);
+      const mutationOptions = getUpdateUserByIdMutationOptions(options);
 
       return useMutation(mutationOptions);
     }
@@ -265,7 +261,7 @@ export const usePutUsersUserId = <TError = AxiosError<unknown>,
 /**
  * @summary Delete a user
  */
-export const deleteUsersUserId = (
+export const deleteUserById = (
     userId: number, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<void>> => {
     
@@ -276,18 +272,18 @@ export const deleteUsersUserId = (
 
 
 
-export const getDeleteUsersUserIdMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUsersUserId>>, TError,{userId: number}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteUsersUserId>>, TError,{userId: number}, TContext> => {
+export const getDeleteUserByIdMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: number}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: number}, TContext> => {
 const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteUsersUserId>>, {userId: number}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteUserById>>, {userId: number}> = (props) => {
           const {userId} = props ?? {};
 
-          return  deleteUsersUserId(userId,axiosOptions)
+          return  deleteUserById(userId,axiosOptions)
         }
 
         
@@ -295,23 +291,23 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type DeleteUsersUserIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteUsersUserId>>>
+    export type DeleteUserByIdMutationResult = NonNullable<Awaited<ReturnType<typeof deleteUserById>>>
     
-    export type DeleteUsersUserIdMutationError = AxiosError<unknown>
+    export type DeleteUserByIdMutationError = AxiosError<unknown>
 
     /**
  * @summary Delete a user
  */
-export const useDeleteUsersUserId = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUsersUserId>>, TError,{userId: number}, TContext>, axios?: AxiosRequestConfig}
+export const useDeleteUserById = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: number}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationResult<
-        Awaited<ReturnType<typeof deleteUsersUserId>>,
+        Awaited<ReturnType<typeof deleteUserById>>,
         TError,
         {userId: number},
         TContext
       > => {
 
-      const mutationOptions = getDeleteUsersUserIdMutationOptions(options);
+      const mutationOptions = getDeleteUserByIdMutationOptions(options);
 
       return useMutation(mutationOptions);
     }
