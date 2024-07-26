@@ -3,19 +3,22 @@ import { useQueryClient } from '@tanstack/react-query';
 import {
   useListUsers,
   useDeleteUserById,
-  getListUsersQueryKey
+  getListUsersQueryKey,
+  useUpdateUserById,
 } from './api/users';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import UserTable from './component/UserTable';
 import UserTableSkelton from './component/UserTableSkelton';
 import type { User } from './api/users.schemas';
+import { getUpdateUserByIdRequestMock } from './util/mockData';
 
 function App() {
   const queryClient = useQueryClient();
   const queryKey = getListUsersQueryKey();
   const { data: users, isLoading, isError } = useListUsers();
   const mutation = useDeleteUserById();
+  const updateMutation = useUpdateUserById();
 
   // ユーザー削除（本来はコンファームダイアログを表示するが省略）
   const handleDelete = useCallback((id: string) => {
@@ -32,8 +35,29 @@ function App() {
     });
   }, [queryKey]);
 
+  // ユーザー編集（本来は編集ダイアログを表示するが省略してモックで更新する）
   const handleEdit = useCallback((id: string) => {
-    console.log('edit user', id);
+    // モックユーザー更新データ作成
+    const updateUserDataMock = getUpdateUserByIdRequestMock(id);
+    updateMutation.mutate({
+      userId: id,
+      data: updateUserDataMock
+    }, {
+      // 成功時にキャッシュを更新
+      onSuccess: (data) => {
+        queryClient.setQueriesData({ queryKey }, (oldData: any) => {
+          return {
+            ...oldData,
+            data: oldData.data.map((user: User) => {
+              if (user.id === id) {
+                return updateUserDataMock;
+              }
+              return user;
+            })
+          };
+        });
+      },
+    });
   }, []);
 
   return (
