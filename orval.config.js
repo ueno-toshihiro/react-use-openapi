@@ -27,7 +27,7 @@ module.exports = {
                 return Array.from({length: 10}, () => {
                   return {
                     // ランダムにユーザー情報を生成する
-                    id: faker.number.int({ min: 1, max: 99 }),
+                    id: faker.string.uuid(),
                     name: faker.person.fullName(),
                     email: faker.internet.email(),
                   };

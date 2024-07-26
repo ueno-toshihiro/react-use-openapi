@@ -6,7 +6,7 @@
  */
 export interface User {
   email: string;
-  id: number;
+  id: string;
   name: string;
 }
 

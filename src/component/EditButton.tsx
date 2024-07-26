@@ -3,8 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 
 type Props = {
-  id: number;
-  onClick: (id: number) => void;
+  id: string;
+  onClick: (id: string) => void;
 };
 
 export default function EditButton({ onClick, id }: Props) {

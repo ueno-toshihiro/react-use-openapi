@@ -3,8 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 type Props = {
-  id: number;
-  onClick: (id: number) => void;
+  id: string;
+  onClick: (id: string) => void;
 };
 
 export default function DeleteButton({ onClick, id }: Props) {

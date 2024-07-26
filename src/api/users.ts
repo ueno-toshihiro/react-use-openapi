@@ -147,7 +147,7 @@ export const useCreateUser = <TError = AxiosError<unknown>,
  * @summary Get a user
  */
 export const showUserById = (
-    userId: number, options?: AxiosRequestConfig
+    userId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<User>> => {
     
     return axios.get(
@@ -156,12 +156,12 @@ export const showUserById = (
   }
 
 
-export const getShowUserByIdQueryKey = (userId: number,) => {
+export const getShowUserByIdQueryKey = (userId: string,) => {
     return [`http://localhost:3000/users/${userId}`] as const;
     }
 
     
-export const getShowUserByIdQueryOptions = <TData = Awaited<ReturnType<typeof showUserById>>, TError = AxiosError<unknown>>(userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof showUserById>>, TError, TData>>, axios?: AxiosRequestConfig}
+export const getShowUserByIdQueryOptions = <TData = Awaited<ReturnType<typeof showUserById>>, TError = AxiosError<unknown>>(userId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof showUserById>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
 const {query: queryOptions, axios: axiosOptions} = options ?? {};
@@ -186,7 +186,7 @@ export type ShowUserByIdQueryError = AxiosError<unknown>
  * @summary Get a user
  */
 export const useShowUserById = <TData = Awaited<ReturnType<typeof showUserById>>, TError = AxiosError<unknown>>(
- userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof showUserById>>, TError, TData>>, axios?: AxiosRequestConfig}
+ userId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof showUserById>>, TError, TData>>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -206,7 +206,7 @@ export const useShowUserById = <TData = Awaited<ReturnType<typeof showUserById>>
  * @summary Update a user
  */
 export const updateUserById = (
-    userId: number,
+    userId: string,
     user: User, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<User>> => {
     
@@ -219,14 +219,14 @@ export const updateUserById = (
 
 
 export const getUpdateUserByIdMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: number;data: User}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: number;data: User}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: string;data: User}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: string;data: User}, TContext> => {
 const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateUserById>>, {userId: number;data: User}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateUserById>>, {userId: string;data: User}> = (props) => {
           const {userId,data} = props ?? {};
 
           return  updateUserById(userId,data,axiosOptions)
@@ -245,11 +245,11 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
  * @summary Update a user
  */
 export const useUpdateUserById = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: number;data: User}, TContext>, axios?: AxiosRequestConfig}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateUserById>>, TError,{userId: string;data: User}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationResult<
         Awaited<ReturnType<typeof updateUserById>>,
         TError,
-        {userId: number;data: User},
+        {userId: string;data: User},
         TContext
       > => {
 
@@ -262,7 +262,7 @@ export const useUpdateUserById = <TError = AxiosError<unknown>,
  * @summary Delete a user
  */
 export const deleteUserById = (
-    userId: number, options?: AxiosRequestConfig
+    userId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<void>> => {
     
     return axios.delete(
@@ -273,14 +273,14 @@ export const deleteUserById = (
 
 
 export const getDeleteUserByIdMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: number}, TContext>, axios?: AxiosRequestConfig}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: number}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: string}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: string}, TContext> => {
 const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteUserById>>, {userId: number}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteUserById>>, {userId: string}> = (props) => {
           const {userId} = props ?? {};
 
           return  deleteUserById(userId,axiosOptions)
@@ -299,11 +299,11 @@ const {mutation: mutationOptions, axios: axiosOptions} = options ?? {};
  * @summary Delete a user
  */
 export const useDeleteUserById = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: number}, TContext>, axios?: AxiosRequestConfig}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserById>>, TError,{userId: string}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationResult<
         Awaited<ReturnType<typeof deleteUserById>>,
         TError,
-        {userId: number},
+        {userId: string},
         TContext
       > => {
 

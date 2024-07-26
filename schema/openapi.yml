@@ -53,7 +53,7 @@ paths:
           required: true
           description: User identifier
           schema:
-            type: integer
+            type: string
       responses:
         200:
           description: Success
@@ -70,7 +70,7 @@ paths:
           required: true
           description: User identifier
           schema:
-            type: integer
+            type: string
       requestBody:
         required: true
         content:
@@ -93,7 +93,7 @@ paths:
           required: true
           description: User identifier
           schema:
-            type: integer
+            type: string
       responses:
         204:
           description: User deleted
@@ -104,7 +104,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         name:
           type: string
         email:
@@ -114,6 +114,6 @@ components:
         - name
         - email
       example:
-        id: 1
+        id: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
         name: "John Doe"
         email: "john.doe@example.com"

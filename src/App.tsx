@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useListUsers } from './api/users';
+import { useListUsers, useDeleteUserById } from './api/users';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import UserTable from './component/UserTable';
@@ -7,12 +7,14 @@ import UserTableSkelton from './component/UserTableSkelton';
 
 function App() {
   const { data: users, isPending, isLoading, isError } = useListUsers();
+  const mutation = useDeleteUserById();
 
-  const handleDelete = useCallback((id: number) => {
-    console.log('delete user', id);
+  // ユーザー削除（本来はコンファームダイアログを表示するが省略）
+  const handleDelete = useCallback((id: string) => {
+    mutation.mutate({ userId: id });
   }, []);
 
-  const handleEdit = useCallback((id: number) => {
+  const handleEdit = useCallback((id: string) => {
     console.log('edit user', id);
   }, []);
 

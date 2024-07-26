@@ -11,8 +11,8 @@ import EditButton from './EditButton';
 
 type Props = {
   users: User[];
-  onDelete: (id: number) => void;
-  onEdit: (id: number) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
 };
 
 export default function UserTable({ users, onDelete, onEdit }: Props) {
