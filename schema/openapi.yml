@@ -43,6 +43,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+
   /users/{userId}:
     get:
       summary: Get a user
@@ -88,17 +89,26 @@ paths:
       summary: Delete a user
       operationId: deleteUserById
       parameters:
-        - in: path
-          name: userId
-          required: true
-          description: User identifier
-          schema:
-            type: string
+        - $ref: "#/components/parameters/UserId"
       responses:
         204:
-          description: User deleted
+          description: 成功
+        400:
+          description: 不正なパラメータ
+        404:
+          description: 該当ユーザーなし
+        500:
+          description: 内部エラー
 
 components:
+  parameters:
+    UserId:
+      in: path
+      name: userId
+      required: true
+      description: User identifier
+      schema:
+        type: string
   schemas:
     User:
       type: object

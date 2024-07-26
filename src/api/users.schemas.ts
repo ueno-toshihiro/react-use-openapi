@@ -4,6 +4,10 @@
  * User API
  * OpenAPI spec version: 1.0.0
  */
+export interface UserId {
+  id: string;
+}
+
 export interface User {
   email: string;
   id: string;
