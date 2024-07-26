@@ -1,18 +1,36 @@
 import { useCallback } from 'react';
-import { useListUsers, useDeleteUserById } from './api/users';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  useListUsers,
+  useDeleteUserById,
+  getListUsersQueryKey
+} from './api/users';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import UserTable from './component/UserTable';
 import UserTableSkelton from './component/UserTableSkelton';
+import type { User } from './api/users.schemas';
 
 function App() {
-  const { data: users, isPending, isLoading, isError } = useListUsers();
+  const queryClient = useQueryClient();
+  const queryKey = getListUsersQueryKey();
+  const { data: users, isLoading, isError } = useListUsers();
   const mutation = useDeleteUserById();
 
   // ユーザー削除（本来はコンファームダイアログを表示するが省略）
   const handleDelete = useCallback((id: string) => {
-    mutation.mutate({ userId: id });
-  }, []);
+    mutation.mutate({ userId: id }, {
+      // 成功時にキャッシュを更新
+      onSuccess: (data) => {
+        queryClient.setQueriesData({ queryKey }, (oldData: any) => {
+          return {
+            ...oldData,
+            data: oldData.data.filter((user: User) => user.id !== id)
+          };
+        });
+      },
+    });
+  }, [queryKey]);
 
   const handleEdit = useCallback((id: string) => {
     console.log('edit user', id);
