@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import ReactQueryProvider from './ReactQueryProvider'
-
-const queryClient = new QueryClient();
 
 if (process.env.NODE_ENV === 'development') {
   require('./mock');
@@ -14,11 +11,9 @@ if (process.env.NODE_ENV === 'development') {
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryProvider>
-        <App />
-      </ReactQueryProvider>
-    </QueryClientProvider>
+    <ReactQueryProvider>
+      <App />
+    </ReactQueryProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
