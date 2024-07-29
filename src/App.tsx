@@ -11,7 +11,9 @@ import Grid from '@mui/material/Grid';
 import UserTable from './component/UserTable';
 import UserTableSkelton from './component/UserTableSkelton';
 import type { User } from './api/users.schemas';
-import { getUpdateUserByIdRequestMock } from './util/mockData';
+import { editModalStore } from './store/editModal';
+import { userStore } from './store/user';
+import EditModal from './component/EditModal';
 
 function App() {
   const queryClient = useQueryClient();
@@ -19,6 +21,9 @@ function App() {
   const { data: users, isLoading, isError } = useListUsers();
   const mutation = useDeleteUserById();
   const updateMutation = useUpdateUserById();
+  const selectedUser = userStore((state) => state.user);
+  const setSelectedUser = userStore((state) => state.setSelectedUser);
+  const openModal = editModalStore((state) => state.openModal);
 
   // ユーザー削除（本来はコンファームダイアログを表示するが省略）
   const handleDelete = useCallback((id: string) => {
@@ -35,13 +40,19 @@ function App() {
     });
   }, [queryKey]);
 
+  const handleOpenModal = useCallback((id: string) => {
+    const editUser = users?.data.find((user: User) => user.id === id);
+    if (editUser) {
+      setSelectedUser(editUser);
+      openModal();
+    }
+  }, [users]);
+
   // ユーザー編集（本来は編集ダイアログを表示するが省略してモックで更新する）
-  const handleEdit = useCallback((id: string) => {
-    // モックユーザー更新データ作成
-    const updateUserDataMock = getUpdateUserByIdRequestMock(id);
+  const handleEdit = useCallback(( editUser: User) => {
     updateMutation.mutate({
-      userId: id,
-      data: updateUserDataMock
+      userId: editUser.id,
+      data: editUser
     }, {
       // 成功時にキャッシュを更新
       onSuccess: (data) => {
@@ -49,8 +60,8 @@ function App() {
           return {
             ...oldData,
             data: oldData.data.map((user: User) => {
-              if (user.id === id) {
-                return updateUserDataMock;
+              if (user.id === editUser.id) {
+                return editUser;
               }
               return user;
             })
@@ -58,9 +69,10 @@ function App() {
         });
       },
     });
-  }, []);
+  }, [users]);
 
   return (
+    <> 
     <Container maxWidth="xl">
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -82,7 +94,7 @@ function App() {
             <UserTable
               users={users?.data || []}
               onDelete={handleDelete}
-              onEdit={handleEdit}
+              onEdit={handleOpenModal}
             />
           )}
         </Grid>
@@ -90,6 +102,8 @@ function App() {
         }
       </Grid>
     </Container>
+    <EditModal onSubmit={handleEdit} />
+    </>
   );
 }
 
