@@ -14,6 +14,16 @@ import type { User } from './api/users.schemas';
 import { editModalStore } from './store/editModal';
 import { userStore } from './store/user';
 import EditModal from './component/EditModal';
+import Headers from './component/Typography';
+
+const style = {
+  spacerL: {
+    marginTop: '1em',
+  },
+  spacerM: {
+    marginTop: '0.5em',
+  },
+  }
 
 function App() {
   const queryClient = useQueryClient();
@@ -21,7 +31,6 @@ function App() {
   const { data: users, isLoading, isError } = useListUsers();
   const mutation = useDeleteUserById();
   const updateMutation = useUpdateUserById();
-  const selectedUser = userStore((state) => state.user);
   const setSelectedUser = userStore((state) => state.setSelectedUser);
   const openModal = editModalStore((state) => state.openModal);
 
@@ -73,18 +82,18 @@ function App() {
 
   return (
     <> 
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={style.spacerL}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <h1>Orval mock API</h1>
-        </Grid>
-        <Grid item xs={12}>
-          <h2>Users</h2>
+          <Headers type="h1">ユーザ一覧</Headers>
+          <Headers type="h2" style={style.spacerM}>説明</Headers>
+          <Headers>React状態管理ライブラリと、OpenAPIを使ったAPIクライアントの実装例です。</Headers>
+          <Headers>APIリクエストにはモックサーバーを使い、データはfakerで生成しているため完全にローカルで作動します。</Headers>
         </Grid>
         {
           isError ? (
             <Grid item xs={12}>
-              <div>Error</div>
+              <Headers>Error</Headers>
             </Grid>
           ) : (
             <Grid item xs={12}>
